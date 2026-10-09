@@ -112,3 +112,23 @@ let from_file path =
   close_in infile ;
   final_graph
   
+let export path graph =
+
+  (* Open a write-file. *)
+  let ff = open_out path in
+
+  (* Write in this file. *)
+  fprintf ff "digraph test {\n";
+  fprintf ff "rankdir=LR;\n";
+  fprintf ff "node [shape = circle];\n";
+
+  (* Write all nodes *)
+  n_iter_sorted graph (fun id -> fprintf ff "%d;\n" id);
+
+  (* Write all arcs *)
+  let _ = e_iter graph (fun arc -> fprintf ff "%d -> %d [label = %s];\n" arc.src arc.tgt arc.lbl) in
+  
+  fprintf ff "\n}" ;
+  
+  close_out ff ;
+  ()
