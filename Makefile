@@ -20,10 +20,13 @@ edit:
 demo: build
 	@echo "\n   ⚡  EXECUTING  ⚡\n"
 	./ftest.exe graphs/${graph} $(src) $(dst) outfile
+	dot -Tsvg outfile > result.svg
 	@echo "\n   🥁  RESULT (content of outfile)  🥁\n"
 	@cat outfile
 
 clean:
 	find -L . -name "*~" -delete
 	rm -f *.exe
+	rm outfile
+	rm result.svg
 	dune clean
